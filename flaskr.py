@@ -68,6 +68,13 @@ def show_entries():
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
 
+@app.route('/users')
+def show_users():
+    db = get_db()
+    cur = db.execute('SELECT * FROM users ORDER BY last_name ASC, first_name')
+    entries = cur.fetchall()
+    return render_template('show_users.html', users=users)
+
 
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -75,7 +82,7 @@ def add_entry():
         abort(401)
     db = get_db()
     db.execute('insert into entries (title, text) values (?, ?)',
-                 [request.form['title'], request.form['text']])
+                [request.form['title'], request.form['text']])
     db.commit()
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
