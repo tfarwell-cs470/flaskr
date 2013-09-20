@@ -71,7 +71,7 @@ def show_entries():
 @app.route('/users')
 def show_users():
     db = get_db()
-    cur = db.execute('SELECT * FROM users ORDER BY last_name ASC, first_name')
+    cur = db.execute('SELECT * FROM users ORDER BY last_name ASC, first_name ASC')
     entries = cur.fetchall()
     return render_template('show_users.html', users=users)
 
